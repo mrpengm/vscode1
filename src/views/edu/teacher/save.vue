@@ -84,7 +84,7 @@ export default {
       this.init()
     },
     watch:{//监听
-      $route(to,from){//路由变化的方式,当路由发生辩护啊，就会执行
+      $route(to,from){//路由变化的方式,当路由发生变化时，就会执行
         this.init()
       }
     },

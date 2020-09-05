@@ -101,19 +101,71 @@ export default {
                 cover: '/static/01.jpeg',
                 price: 0
             },
+            courseId:'',
             teacherList:[],//变量封装讲师
             subjectOneList:[],//一级分类
             subjectTwoList:[], //二级分类
             BASE_API:process.env.BASE_API
         }
     },
+    watch: {
+        $route(to,from){//当路径变化时，执行这个方法
+            this.init()
+        }
+    },
     created(){
-        //初始化所有讲师
-        this.getListTeacher()
-        //初始化一级分类
-        this.getOneSubject()
+        //获取路由id值
+         if(this.$route.params && this.$route.params.id){
+            this.courseId = this.$route.params.id
+             //调用根据id查询课程的方法
+            this.getInfo()
+         }else{
+            //初始化一级分类
+            this.getOneSubject()
+            this.getListTeacher()
+            this.init()
+         }
     },
     methods:{
+        init(){
+                //判断路径是否有id值
+          if(this.$route.params && this.$route.params.id){
+              //从路径获取id值
+              const id = this.$route.params.id
+              //调用根据id查询的方法
+              this.getInfo(id)
+          }else{//路径没有id值，没有添加
+            //清空表单
+            this.teacherList = []
+            this.subjectOneList= []
+            this.subjectTwoList = []
+          }
+        },
+        //根据课程id查询
+        getInfo(){
+            course.getCourseInfoId(this.courseId)
+                .then(response =>{
+                    this.courseInfo = response.data.courseInfoVo
+                    //1 查询所有的分类，包含一级和二级
+                    subject.getAllSubject()
+                        .then(response =>{
+                            //2 获取所有一级分类
+                            this.subjectOneList = response.data.list
+                            //3 把所有的一级分类数组进行遍历，比较当前courseInfo里面一级分类id和所有的一级分类id
+                            for(var i = 0;i<this.subjectOneList.length;i++){
+                                //获取每个一级分类
+                                var oneSubject = this.subjectOneList[i]
+                                //比较当前courseInfo里面一级分类id和所有的一级分类id
+                                if(this.courseInfo.subjectParentId == oneSubject.id){
+                                    //获取一级分类里面的二级分类
+                                    this.subjectTwoList = oneSubject.children
+                                }
+                            }
+                        })
+                         //初始化所有讲师
+                        this.getListTeacher()
+                })
+        },
         //上传封面成功调用的方法
         handleAvatarSuccess(res,file){
             this.courseInfo.cover = res.data.url
