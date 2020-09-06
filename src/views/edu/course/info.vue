@@ -133,7 +133,7 @@ export default {
               //从路径获取id值
               const id = this.$route.params.id
               //调用根据id查询的方法
-              this.getInfo(id)
+              this.getInfo()
           }else{//路径没有id值，没有添加
             //清空表单
             this.teacherList = []
@@ -211,7 +211,8 @@ export default {
                     this.teacherList = response.data.item
                 })
         },
-        saveOrUpdate(){
+        //修改课程
+        addCourse(){
             course.addCourseInfo(this.courseInfo)
                 .then(response =>{
                     this.$message({
@@ -221,6 +222,28 @@ export default {
                     //跳转到第二步
                      this.$router.push({path:'/course/chapter/'+response.data.courseId})
                 })
+        },
+        //修改课程
+        updateCourse(){
+            course.updateCourseInfo(this.courseInfo)
+                .then(response =>{
+                     this.$message({
+                        type: 'scuccess',
+                        message: '修改课程信息成功!'
+                    })
+                    //跳转到第二步
+                     this.$router.push({path:'/course/chapter/'+this.courseId})
+                })
+        },
+        saveOrUpdate(){
+            //判断添加还是修改
+            if(!this.courseInfo.id){
+                //添加
+                this.addCourse()
+            }else{
+                //修改
+                this.updateCourse()
+            }
         }
     }
 }
