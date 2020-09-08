@@ -53,7 +53,7 @@ export default{
     //课程最终发布
     getListCourse(){
         return request({
-            url:'/eduservice/edu-course/list/',
+            url:'/eduservice/edu-course/list',
             method: 'get'
           })
     }

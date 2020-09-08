@@ -158,7 +158,7 @@ export default {
                //提示信息
               this.$message({
                   type: 'success',
-                  message: '添加小节成功!'
+                  message: '添加视频成功!'
               });
               //清空这个列表，在上传页面下的列表不显示
               this.fileList = []
