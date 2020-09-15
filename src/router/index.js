@@ -52,16 +52,16 @@ export const constantRouterMap = [
       },
       {
         path: 'save',
-        name: '添加讲师',
+        name: '添加讲师',  
         component: () => import('@/views/edu/teacher/save'),
         meta: { title: '添加讲师', icon: 'tree' }
       },
       {
-        path: 'edit/:id',//:id 相当于占位符
+        path: 'edit/:id',   
         name: 'EduTeacherEdit',
         component: () => import('@/views/edu/teacher/save'),
-        meta: { title: '编辑讲师', noCache: 'tree' },
-        hidden:true
+        meta: { title: '编辑讲师', noCache: true },
+        hidden: true
       }
     ]
   },
@@ -81,12 +81,13 @@ export const constantRouterMap = [
       },
       {
         path: 'save',
-        name: '添加课程分类',
+        name: '添加课程分类',  
         component: () => import('@/views/edu/subject/save'),
         meta: { title: '添加课程分类', icon: 'tree' }
       }
     ]
   },
+
   {
     path: '/course',
     component: Layout,
@@ -102,23 +103,23 @@ export const constantRouterMap = [
       },
       {
         path: 'info',
-        name: '添加课程',
+        name: '添加课程',  
         component: () => import('@/views/edu/course/info'),
         meta: { title: '添加课程', icon: 'tree' }
       },
       {
-          path: 'info/:id',
-          name: 'EduCourseInfoEdit',
-          component: () => import('@/views/edu/course/info'),
-          meta: { title: '编辑课程基本信息', noCache: true },
-          hidden: true
+        path: 'info/:id',
+        name: 'EduCourseInfoEdit',
+        component: () => import('@/views/edu/course/info'),
+        meta: { title: '编辑课程基本信息', noCache: true },
+        hidden: true
       },
       {
-          path: 'chapter/:id',
-          name: 'EduCourseChapterEdit',
-          component: () => import('@/views/edu/course/chapter'),
-          meta: { title: '编辑课程大纲', noCache: true },
-          hidden: true
+        path: 'chapter/:id',
+        name: 'EduCourseChapterEdit',
+        component: () => import('@/views/edu/course/chapter'),
+        meta: { title: '编辑课程大纲', noCache: true },
+        hidden: true
       },
       {
         path: 'publish/:id',
@@ -129,6 +130,29 @@ export const constantRouterMap = [
       }
     ]
   },
+
+  {
+    path: '/sta',
+    component: Layout,
+    redirect: '/sta/create',
+    name: '统计分析',
+    meta: { title: '统计分析', icon: 'example' },
+    children: [
+      {
+        path: 'create',
+        name: '生成数据',
+        component: () => import('@/views/sta/create'),
+        meta: { title: '生成数据', icon: 'table' }
+      },
+      {
+        path: 'show',
+        name: '图表显示',
+        component: () => import('@/views/sta/show'),
+        meta: { title: '图表显示', icon: 'tree' }
+      }
+    ]
+  },
+
   {
     path: '/example',
     component: Layout,
